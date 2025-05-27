@@ -4,6 +4,7 @@ import {
   deleteMembetByiDFromDB,
   getMemberByIDdb,
   getMembers,
+  getSubsByMovies,
 } from "../services/membersServices.js";
 const router = express.Router();
 //http://localhost:5000/members
@@ -18,12 +19,25 @@ router.post("/", async (req, res) => {
 router.get("/", async (req, res) => {
   try {
     // Replace this with your actual service to fetch members
-    const members = await getMembers();
+    const filters = req.query;
+    const members = await getMembers(filters);
     res.status(200).json(members);
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
 });
+router.get("/member-watched", async (req, res) => {
+  try {
+    // Replace this with your actual service to fetch members
+
+    const filters = req.query;
+    const { movies } = await getSubsByMovies(filters);
+    res.status(200).json(movies);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+});
+
 router.get("/:id", async (req, res) => {
   try {
     const { id } = req.params;

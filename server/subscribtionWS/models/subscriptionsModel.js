@@ -15,6 +15,7 @@ const subscriptionSchema = new mongoose.Schema(
           required: true,
         },
         date: { type: Date, required: true },
+        _id: false, // <- THIS disables _id on subdocument
       },
     ],
   },

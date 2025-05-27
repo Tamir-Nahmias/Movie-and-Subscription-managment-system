@@ -7,7 +7,7 @@ import { router as authRouter } from "./controllers/authControllers.js";
 import { router as mainRouter } from "./controllers/mainController.js";
 import { router as userRouter } from "./controllers/userController.js";
 import { router as externalMemberRouter } from "./controllers/externalMembersControllers.js";
-
+import { router as externalSubsRouter } from "./controllers/externalSubscriptionsControllers.js";
 connectDB();
 
 const app = express();
@@ -18,6 +18,7 @@ app.use(cors());
 app.use(express.json());
 app.use("/movies", externalMoviesRouter);
 app.use("/members", externalMemberRouter);
+app.use("/subscriptions", externalSubsRouter);
 app.use("/auth", authRouter);
 app.use("/main", mainRouter);
 app.use("/users", userRouter);

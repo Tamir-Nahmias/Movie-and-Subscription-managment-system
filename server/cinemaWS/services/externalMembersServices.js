@@ -3,12 +3,17 @@ import {
   addMember,
   updateMember,
   deleteMember,
+  getAllMoviesAndSubscriptionsPerMemberOrAll,
 } from "../repositories/membersWS-External-Repo.js";
 
 // Get all external members
 const getAllExternalMembers = async () => {
   const { data } = await getMembers();
   return data;
+};
+
+const getAllOrPartlyMOviesPerMember = (filters) => {
+  return getAllMoviesAndSubscriptionsPerMemberOrAll(filters);
 };
 
 // Get external member by ID
@@ -41,4 +46,5 @@ export {
   createExternalMember,
   updateExternalMember,
   deleteExternalMember,
+  getAllOrPartlyMOviesPerMember,
 };

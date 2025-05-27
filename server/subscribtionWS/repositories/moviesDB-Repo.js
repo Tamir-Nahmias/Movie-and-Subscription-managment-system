@@ -1,7 +1,7 @@
 import Movie from "../models/moviesModel.js";
 
-const getAllMovies = async (filters = {}) => {
-  return Movie.find(filters);
+const getAllMovies = (filters = {}) => {
+  return Movie.find(filters).lean();
 };
 const getMovieById = (id) => {
   return Movie.findById(id);

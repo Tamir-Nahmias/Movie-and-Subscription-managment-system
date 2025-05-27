@@ -2,11 +2,13 @@ import {
   addMovie as addMovieRepo,
   getMovieByID,
   getAllMovies as getMovies,
+  getMoviesJoinSubs,
+  getUnWatchedMoviesByMemberID,
   updateMovieById,
 } from "../repositories/moviesWS-External-Repo.js";
 
-const getAllMovies = async () => {
-  const { data } = await getMovies();
+const getAllMovies = async (filters) => {
+  const { data } = await getMovies(filters);
   return data;
 };
 
@@ -25,4 +27,20 @@ const updateMovie = async (id, obj) => {
   return data;
 };
 
-export { getAllMovies, addMovie, getMovieByIDService, updateMovie };
+const getUnwatchedMovies = async (id) => {
+  const { data } = await getUnWatchedMoviesByMemberID(id);
+  return data;
+};
+
+const getMoviesJoinedSubscriptions = () => {
+  return getMoviesJoinSubs();
+};
+
+export {
+  getAllMovies,
+  addMovie,
+  getMovieByIDService,
+  updateMovie,
+  getUnwatchedMovies,
+  getMoviesJoinedSubscriptions,
+};

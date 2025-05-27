@@ -1,26 +1,69 @@
+import { useEffect } from "react";
 import { useState } from "react";
+import axios from "axios";
+import { MOVIES_URL, SUBS_URL } from "../utils/consts";
 
-const SubscribeToMovie = () => {
+const SubscribeToMovie = ({ id, refreshList, setRefreshList }) => {
+  const [unwatchedMovie, setUnwatchedMovie] = useState([]);
   const [details, setDetails] = useState({});
+  const [isSubscriberExistsAlready, setIsSubscriberExistsAlready] = useState();
+
   const handleChange = (event) => {
     const { name, value } = event.target;
-    setDetails((prevDetails) => setDetails({ ...prevDetails, [name]: value }));
+    setDetails((prevDetails) => ({ ...prevDetails, [name]: value }));
   };
+
   const handleSubmit = (event) => {
     event.preventDefault();
+    if (!isSubscriberExistsAlready) {
+      axios.post(`${SUBS_URL}`, {
+        memberID: id,
+        movies: [
+          {
+            movieID: details.movieID,
+            date: details.date,
+          },
+        ],
+      });
+      fetchUnwatchedMovies(); // refreshing lists
+      setRefreshList(!refreshList);
+    } else {
+      axios.put(`${SUBS_URL}/update-subscription/${id}`, {
+        movieID: details.movieID,
+        date: details.date,
+      });
+      setRefreshList(!refreshList);
+      fetchUnwatchedMovies(); //for refrshing the list after submitting the request
+    }
   };
+  const fetchUnwatchedMovies = () => {
+    if (!id) return;
+    axios
+      .get(`${MOVIES_URL}/unwatched-movies/${id}`)
+      .then(({ data }) => {
+        setUnwatchedMovie(data.movies);
+        setIsSubscriberExistsAlready(!data.collectionEmpty);
+      })
+      .catch(() => setIsSubscriberExistsAlready(false));
+  };
+  useEffect(() => {
+    fetchUnwatchedMovies();
+  }, [id]);
   return (
     <>
       <form onSubmit={handleSubmit}>
         <div>
-          <select id="options" name="movies" onChange={handleChange}>
+          <select id="options" name="movieID" onChange={handleChange}>
             <option value="">--Please choose an option--</option>
-            <option value="option1">Option 1</option>
-            <option value="option2">Option 2</option>
-            <option value="option3">Option 3</option>
-            <option value="option4">Option 4</option>
+
+            {unwatchedMovie?.map((movie) => (
+              <option key={movie._id} value={movie._id}>
+                {movie.name}
+              </option>
+            ))}
           </select>
-          <input type="date" onChange={handleChange}></input>
+
+          <input type="date" name="date" onChange={handleChange}></input>
         </div>
         <div>
           <button type="submit">Subscribe</button>

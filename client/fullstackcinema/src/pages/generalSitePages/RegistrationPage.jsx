@@ -1,6 +1,6 @@
 import axios from "axios";
 import React, { useState } from "react";
-import { USERS_URL } from "../utils/consts";
+import { USERS_URL } from "../../utils/consts";
 import { useParams, Outlet, useNavigate } from "react-router";
 
 const RegistrationPage = () => {

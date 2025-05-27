@@ -1,18 +1,27 @@
 import axios from "axios";
 import { useState } from "react";
-import { MOVIES_URL } from "../utils/consts";
+import { MEMBERS_URL, MOVIES_URL } from "../utils/consts";
 import { useEffect } from "react";
 import { useSelector } from "react-redux";
-import { useNavigate } from "react-router";
+import { Link, useLocation, useNavigate } from "react-router";
 
 const AllMoviesPage = () => {
   const [movies, setMovies] = useState([]);
   const navigate = useNavigate();
+  const location = useLocation();
+
   // const [permissions, setPermissions] = useState([]);
   const state = useSelector((state) => state.connectedUserDetails.permissions);
   useEffect(() => {
-    axios.get(MOVIES_URL).then(({ data }) => setMovies(data));
+    const queryParams = new URLSearchParams(location.search);
+    const DisplayedMovie = queryParams.get("name");
+    axios // returns ALL movies  ALWAYS with their subscribers if exist
+      .get(`${MEMBERS_URL}/member-watched`, {
+        params: { name: DisplayedMovie }, // the name filter uses for if we wre reffered from members page
+      })
+      .then(({ data }) => setMovies(data));
   }, []);
+
   const handleEdit = (id) => {
     navigate(`../update-movie/${id}`);
   };
@@ -22,7 +31,7 @@ const AllMoviesPage = () => {
       <h5>All Movies Page</h5>
       <ul>
         {movies.map((movie) => {
-          const { name, premiered, image, genres } = movie;
+          const { name, premiered, image, genres, subscriptions } = movie;
           return (
             <li key={movie._id}>
               <h3>
@@ -32,6 +41,20 @@ const AllMoviesPage = () => {
               <img src={image} width="100px" height="auto" />
               <div>
                 <h4>watched by :</h4>
+                <ul>
+                  {subscriptions?.map((watch, index) => {
+                    return (
+                      <li key={index}>
+                        <Link
+                          to={`../../subscriptions/all-members/?memberID=${watch.memberID}`}
+                        >
+                          {watch.memberName}
+                        </Link>
+                        {watch.date.split("T")[0]}
+                      </li>
+                    );
+                  })}
+                </ul>
               </div>
               <div>
                 <button

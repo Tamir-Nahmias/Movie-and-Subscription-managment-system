@@ -1,6 +1,10 @@
 import { useEffect, useState } from "react";
 import { Link, Outlet, useNavigate } from "react-router";
-import { MAIN_URL, SET_CONNECTED_USER, SET_ROLE_ADMIN } from "../utils/consts";
+import {
+  MAIN_URL,
+  SET_CONNECTED_USER,
+  SET_ROLE_ADMIN,
+} from "../../utils/consts";
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 

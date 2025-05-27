@@ -1,10 +1,10 @@
 import { Route, Routes } from "react-router";
 import "./App.css";
-import LoginPage from "./pages/LoginPage";
-import RegistrationPage from "./pages/RegistrationPage";
+import LoginPage from "./pages/generalSitePages/LoginPage";
+import RegistrationPage from "./pages/generalSitePages/RegistrationPage";
 import Movies from "./pages/Movies";
 import Subscriptions from "./pages/Subscriptions";
-import MainPage from "./pages/MainPage";
+import MainPage from "./pages/generalSitePages/MainPage";
 import ManageUsers from "./pages/adminPages/ManageUsers";
 import AddUser from "./pages/adminPages/AddUser";
 import AllUsers from "./pages/adminPages/AllUsers";
@@ -15,7 +15,7 @@ import AddMember from "./pages/AddMember";
 import UpdateMovie from "./pages/UpdateMovie";
 import UpdateMember from "./pages/UpdateMember";
 import EditUser from "./pages/adminPages/EditUser";
-import NotAuthorized from "./pages/NotAuthorized";
+import NotAuthorized from "./pages/generalSitePages/NotAuthorized";
 
 function App() {
   return (

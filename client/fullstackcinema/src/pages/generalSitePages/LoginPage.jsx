@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router";
 import axios from "axios";
-import { AUTH_URL, SET_TOKEN } from "../utils/consts";
+import { AUTH_URL, SET_TOKEN } from "../../utils/consts";
 import { useDispatch } from "react-redux";
 
 const LoginPage = () => {

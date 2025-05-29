@@ -2,10 +2,12 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { MEMBERS_URL } from "../utils/consts";
 import { useNavigate } from "react-router";
+import { useSelector } from "react-redux";
 
 const AddUpdateMemberForm = ({ isEdit, id }) => {
   const [formData, setFormData] = useState({});
   const navigate = useNavigate();
+  const token = useSelector((state) => state.token);
 
   const handleCancel = () => {
     navigate("../all-members");
@@ -19,17 +21,30 @@ const AddUpdateMemberForm = ({ isEdit, id }) => {
   useEffect(() => {
     isEdit &&
       axios
-        .get(`${MEMBERS_URL}/${id}`)
+        .get(`${MEMBERS_URL}/${id}`, {
+          headers: {
+            "x-access-token": token,
+          },
+        })
         .then(({ data }) => setFormData(data))
         .catch((err) => console.error(err));
   }, []);
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    const { name, email, city } = formData;
     isEdit
-      ? ""
+      ? axios.put(`${MEMBERS_URL}/${id}`, formData, {
+          headers: {
+            "x-access-token": token,
+          },
+        })
       : axios
-          .post(MEMBERS_URL, formData)
+          .post(MEMBERS_URL, formData, {
+            headers: {
+              "x-access-token": token,
+            },
+          })
           .then(({ data }) => console.log(`user added succesfuly`, data));
   };
 

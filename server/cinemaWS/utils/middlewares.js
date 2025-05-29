@@ -21,12 +21,26 @@ function requireAdmin(req, res, next) {
       return res.status(403).json({ error: "Access denied: Admins only" });
     }
 
-    req.user = decoded;
-    next();
+    req.user = decoded; // adding req a fiels of user so we can pass it to next handler if exists in my End points. not a mandattory
+    next(); // conveying the dat of req to next handler if exist . not a mandatory
   } catch (err) {
-    console.error("JWT verification error:", err); // 👈 Debug line
+    return res.status(401).json({ error: "Failed to authenticate token" });
+  }
+}
+function requireAuthUsers(req, res, next) {
+  const token = req.headers["x-access-token"];
+
+  if (!token) {
+    return res.status(401).json({ error: "No token provided" });
+  }
+
+  try {
+    const decoded = jwt.verify(token, JWT_SECRET);
+    req.user = decoded; // adding req a fiels of user so we can pass it to next handler if exists in my End points. not a mandattory
+    next(); // conveying the dat of req to next handler if exist . not a mandatory
+  } catch (err) {
     return res.status(401).json({ error: "Failed to authenticate token" });
   }
 }
 
-export { requireAdmin };
+export { requireAdmin, requireAuthUsers };

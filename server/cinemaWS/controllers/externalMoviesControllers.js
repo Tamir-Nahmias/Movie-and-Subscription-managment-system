@@ -7,11 +7,12 @@ import {
   updateMovie,
 } from "../services/externalMoviesServices.js";
 import express from "express";
+import { requireAuthUsers } from "../utils/middlewares.js";
 const router = express.Router();
 
 //http://localhost:3000/movies
 
-router.get("/", async (req, res) => {
+router.get("/", requireAuthUsers, async (req, res) => {
   try {
     const filters = req.query ?? {};
     const result = await getAllMovies(filters);
@@ -21,7 +22,7 @@ router.get("/", async (req, res) => {
   }
 });
 //End point  for external source movies joined subscriptions
-router.get("/join-subscriptions", async (req, res) => {
+router.get("/join-subscriptions", requireAuthUsers, async (req, res) => {
   try {
     const { data } = await getMoviesJoinedSubscriptions();
     res.status(200).json(data);
@@ -30,7 +31,7 @@ router.get("/join-subscriptions", async (req, res) => {
     res.status(500).json({ error: "Failed to join subscriptions." });
   }
 });
-router.get("/unwatched-movies/:id", async (req, res) => {
+router.get("/unwatched-movies/:id", requireAuthUsers, async (req, res) => {
   try {
     const { id } = req.params;
     const result = await getUnwatchedMovies(id);
@@ -42,7 +43,7 @@ router.get("/unwatched-movies/:id", async (req, res) => {
   }
 });
 
-router.post("/", async (req, res) => {
+router.post("/", requireAuthUsers, async (req, res) => {
   try {
     const movie = req.body;
     const data = await addMovie(movie);
@@ -52,7 +53,7 @@ router.post("/", async (req, res) => {
   }
 });
 //http://localhost:3000/movies/id
-router.get("/:id", async (req, res) => {
+router.get("/:id", requireAuthUsers, async (req, res) => {
   try {
     const { id } = req.params;
     const result = await getMovieByIDService(id);
@@ -63,7 +64,7 @@ router.get("/:id", async (req, res) => {
 });
 
 //PUT//http://localhost:3000/movies/id
-router.put("/:id", async (req, res) => {
+router.put("/:id", requireAuthUsers, async (req, res) => {
   try {
     const { id } = req.params;
     const obj = req.body;

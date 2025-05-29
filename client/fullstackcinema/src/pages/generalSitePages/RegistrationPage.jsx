@@ -1,7 +1,7 @@
 import axios from "axios";
-import React, { useState } from "react";
+import { useState } from "react";
 import { USERS_URL } from "../../utils/consts";
-import { useParams, Outlet, useNavigate } from "react-router";
+import { useNavigate } from "react-router";
 
 const RegistrationPage = () => {
   const [details, setDetails] = useState({});
@@ -26,7 +26,7 @@ const RegistrationPage = () => {
       .get(`${USERS_URL}/db-validation/${details.username}`)
       .then(({ data }) =>
         data ? updatePassWordAndRedirect(data._id) : setIsUsernameExist(data)
-      ); //the returned value data is returned object  or false
+      ); //the returned value data is a returned object  or false
   };
 
   return (

@@ -5,10 +5,11 @@ import {
   getAllSubscriptions,
   getWatchedMovies,
 } from "../services/externalSubscriptionsServices.js";
+import { requireAuthUsers } from "../utils/middlewares.js";
 const router = express.Router();
 
 //localhost:3000/subscriptions
-router.get("/", async (req, res) => {
+router.get("/", requireAuthUsers, async (req, res) => {
   try {
     const { data } = await getAllSubscriptions();
     res.json(data);
@@ -17,7 +18,7 @@ router.get("/", async (req, res) => {
   }
 });
 
-router.get("/watched-movies/:id", async (req, res) => {
+router.get("/watched-movies/:id", requireAuthUsers, async (req, res) => {
   try {
     const { id } = req.params;
     const { data } = await getWatchedMovies(id);
@@ -27,7 +28,7 @@ router.get("/watched-movies/:id", async (req, res) => {
   }
 });
 
-router.put("/update-subscription/:id", async (req, res) => {
+router.put("/update-subscription/:id", requireAuthUsers, async (req, res) => {
   try {
     const { movieID, date } = req.body;
     const { id } = req.params;
@@ -38,7 +39,7 @@ router.put("/update-subscription/:id", async (req, res) => {
     res.status(404).json({ ["Error Occured"]: error });
   }
 });
-router.post("/", async (req, res) => {
+router.post("/", requireAuthUsers, async (req, res) => {
   try {
     const subscriber = req.body;
     const { data } = await addNewSubscriberService(subscriber);

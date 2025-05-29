@@ -3,6 +3,7 @@ import axios from "axios";
 import { MEMBERS_URL, MOVIES_URL, SUBS_URL } from "../utils/consts";
 import { Link, useLocation, useNavigate } from "react-router";
 import SubscribeToMovie from "./SubscribeToMovie";
+import { useSelector } from "react-redux";
 
 const AllMembers = () => {
   const navigate = useNavigate();
@@ -11,6 +12,7 @@ const AllMembers = () => {
   const [watchedMoviesByMember, setWatchedMoviesByMember] = useState([]);
   const [openMemberIds, setOpenMemberIds] = useState([]);
   const [refreshList, setRefreshList] = useState(true);
+  const token = useSelector((state) => state.token);
 
   const openSubscribeForm = (id) => {
     setOpenMemberIds((prev) => (prev.includes(id) ? prev : [...prev, id]));
@@ -20,7 +22,11 @@ const AllMembers = () => {
     const queryParams = new URLSearchParams(location.search);
     const memberID = queryParams.get("memberID");
     axios
-      .get(`${MEMBERS_URL}/${memberID ?? ""}`)
+      .get(`${MEMBERS_URL}/${memberID ?? ""}`, {
+        headers: {
+          "x-access-token": token,
+        },
+      })
       .then(({ data }) =>
         Array.isArray(data) ? setMembers(data) : setMembers([data])
       );
@@ -28,7 +34,11 @@ const AllMembers = () => {
 
   const fetchWatchedMovies = () => {
     axios
-      .get(`${MOVIES_URL}/join-subscriptions`)
+      .get(`${MOVIES_URL}/join-subscriptions`, {
+        headers: {
+          "x-access-token": token,
+        },
+      })
       .then(({ data }) => setWatchedMoviesByMember(data))
       .catch((err) => console.error(err));
   };
@@ -45,7 +55,11 @@ const AllMembers = () => {
   };
   const handlDelete = (id) => {
     axios
-      .delete(`${MEMBERS_URL}/${id}`)
+      .delete(`${MEMBERS_URL}/${id}`, {
+        headers: {
+          "x-access-token": token,
+        },
+      })
       .then(() => fetchMembers())
       .catch((error) => console.error(error));
   };

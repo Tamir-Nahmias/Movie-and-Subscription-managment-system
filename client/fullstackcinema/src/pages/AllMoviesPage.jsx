@@ -9,6 +9,7 @@ const AllMoviesPage = () => {
   const [movies, setMovies] = useState([]);
   const navigate = useNavigate();
   const location = useLocation();
+  const token = useSelector((state) => state.token);
 
   // const [permissions, setPermissions] = useState([]);
   const state = useSelector((state) => state.connectedUserDetails.permissions);
@@ -18,6 +19,9 @@ const AllMoviesPage = () => {
     axios // returns ALL movies  ALWAYS with their subscribers if exist
       .get(`${MEMBERS_URL}/member-watched`, {
         params: { name: DisplayedMovie }, // the name filter uses for if we wre reffered from members page
+        headers: {
+          "x-access-token": token,
+        },
       })
       .then(({ data }) => setMovies(data));
   }, []);

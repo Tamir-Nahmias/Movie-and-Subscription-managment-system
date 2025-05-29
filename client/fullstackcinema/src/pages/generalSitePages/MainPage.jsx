@@ -18,8 +18,7 @@ const MainPage = () => {
   const loggedUser = useSelector((state) => state.connectedUserDetails);
   const adminID = import.meta.env.VITE_ADMIN_ID;
 
-  useEffect(() => {
-    // const token = sessionStorage.getItem("token");
+  const fetchUser = () => {
     axios
       .get(MAIN_URL, {
         headers: {
@@ -32,6 +31,10 @@ const MainPage = () => {
         navigate("/not-authorized");
       })
       .finally(() => setDispatchFininshed(!dispatchFininshed));
+  };
+
+  useEffect(() => {
+    fetchUser();
   }, []);
 
   useEffect(() => {

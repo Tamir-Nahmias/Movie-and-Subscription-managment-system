@@ -10,8 +10,8 @@ const getAllMoviesAndSubscriptionsPerMemberOrAll = (filters) => {
 const addMember = (member) => {
   return axios.post(MEMBERS_URL, member);
 };
-const updateMember = (member) => {
-  return axios.put(`${MEMBERS_URL}/${member.id}`, member);
+const updateMember = (id, member) => {
+  return axios.put(`${MEMBERS_URL}/${id}`, member);
 };
 const deleteMember = (id) => {
   return axios.delete(`${MEMBERS_URL}/${id}`);

@@ -6,15 +6,16 @@ import { BrowserRouter } from "react-router-dom";
 import { Provider } from "react-redux";
 import reducer from "./redux/rootReducer.js";
 import { legacy_createStore as createStore } from "redux";
+import { composeWithDevTools } from "@redux-devtools/extension"; // added for Redux browser extension
 
-const store = createStore(reducer);
+const store = createStore(reducer, composeWithDevTools());
 
 createRoot(document.getElementById("root")).render(
-  <Provider store={store}>
-    <BrowserRouter>
-      <StrictMode>
+  <StrictMode>
+    <Provider store={store}>
+      <BrowserRouter>
         <App />
-      </StrictMode>
-    </BrowserRouter>
-  </Provider>
+      </BrowserRouter>
+    </Provider>
+  </StrictMode>
 );

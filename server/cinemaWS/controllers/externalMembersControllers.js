@@ -10,9 +10,10 @@ import {
   deleteExternalMember,
   getAllOrPartlyMOviesPerMember,
 } from "../services/externalMembersServices.js";
-
+import { requireAuthUsers } from "../utils/middlewares.js";
+//http://localhost:3000/members
 // Get all external members
-router.get("/", async (req, res) => {
+router.get("/", requireAuthUsers, async (req, res) => {
   try {
     const members = await getAllExternalMembers();
     res.json(members);
@@ -21,7 +22,7 @@ router.get("/", async (req, res) => {
   }
 });
 
-router.get("/member-watched", async (req, res) => {
+router.get("/member-watched", requireAuthUsers, async (req, res) => {
   try {
     // Replace this with your actual service to fetch members
 
@@ -34,14 +35,10 @@ router.get("/member-watched", async (req, res) => {
 });
 
 // Get external member by ID
-router.get("/:id", async (req, res) => {
+router.get("/:id", requireAuthUsers, async (req, res) => {
   try {
     const { id } = req.params;
-    // if (!/^\d+$/.test(id.toString())) {
-    //   return res
-    //     .status(400)
-    //     .json({ message: "Invalid member ID format", output: id });
-    // }
+
     const member = await getExternalMemberById(id.toString());
 
     if (!member) {
@@ -54,7 +51,7 @@ router.get("/:id", async (req, res) => {
 });
 
 // Add a new external member
-router.post("/", async (req, res) => {
+router.post("/", requireAuthUsers, async (req, res) => {
   try {
     const newMember = await createExternalMember(req.body);
     res.status(201).json(newMember);
@@ -64,9 +61,11 @@ router.post("/", async (req, res) => {
 });
 
 // Update an external member
-router.put("/:id", async (req, res) => {
+router.put("/:id", requireAuthUsers, async (req, res) => {
   try {
-    const updatedMember = await updateExternalMember(req.params.id, req.body);
+    const { id } = req.params;
+    const body = req.body;
+    const { data: updatedMember } = await updateExternalMember(id, body);
     if (!updatedMember) {
       return res.status(404).json({ message: "Member not found" });
     }
@@ -77,7 +76,7 @@ router.put("/:id", async (req, res) => {
 });
 
 // Delete an external member
-router.delete("/:id", async (req, res) => {
+router.delete("/:id", requireAuthUsers, async (req, res) => {
   try {
     const deleted = await deleteExternalMember(req.params.id);
     if (!deleted) {

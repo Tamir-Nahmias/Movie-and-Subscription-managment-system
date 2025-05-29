@@ -17,7 +17,6 @@ const LoginPage = () => {
     axios
       .post(AUTH_URL, details)
       .then((res) => {
-        // sessionStorage.setItem("token", res.data.token);
         dispatch({ type: SET_TOKEN, payload: res.data.token });
         navigate("/main");
       })

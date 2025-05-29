@@ -3,9 +3,11 @@ import axios from "axios";
 import { MOVIES_URL } from "../utils/consts";
 import { useNavigate } from "react-router";
 import { useEffect } from "react";
+import { useSelector } from "react-redux";
 
 const AddUpdateMovieForm = ({ id, isEdit }) => {
   const [formDetails, setFormDetails] = useState({});
+  const token = useSelector((state) => state.token);
   const navigate = useNavigate();
   const handleChange = (event) => {
     const attribute = event.target.name;
@@ -16,7 +18,11 @@ const AddUpdateMovieForm = ({ id, isEdit }) => {
     {
       isEdit &&
         axios
-          .get(`${MOVIES_URL}/${id}`)
+          .get(`${MOVIES_URL}/${id}`, {
+            headers: {
+              "x-access-token": token,
+            },
+          })
           .then(({ data }) => setFormDetails(data));
     }
   }, []);
@@ -25,9 +31,19 @@ const AddUpdateMovieForm = ({ id, isEdit }) => {
     event.preventDefault();
     isEdit
       ? axios
-          .put(`${MOVIES_URL}/${id}`, formDetails)
+          .put(`${MOVIES_URL}/${id}`, formDetails, {
+            headers: {
+              "x-access-token": token,
+            },
+          })
           .then(({ data }) => console.log(data))
-      : axios.post(MOVIES_URL, formDetails).then(navigate("../all-movies"));
+      : axios
+          .post(MOVIES_URL, formDetails, {
+            headers: {
+              "x-access-token": token,
+            },
+          })
+          .then(navigate("../all-movies"));
   };
   const handleCancel = () => {
     navigate("../all-movies");

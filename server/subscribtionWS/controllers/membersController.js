@@ -5,6 +5,7 @@ import {
   getMemberByIDdb,
   getMembers,
   getSubsByMovies,
+  updateMemberByIdDB,
 } from "../services/membersServices.js";
 const router = express.Router();
 //http://localhost:5000/members
@@ -57,4 +58,17 @@ router.delete("/:id", async (req, res) => {
     throw new Error(error);
   }
 });
+
+router.put("/:id", async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    const body = req.body;
+    const result = await updateMemberByIdDB(id, body);
+    res.json(result);
+  } catch (e) {
+    console.error({ ["Error message"]: e });
+    res.status(404).json({ message: "Error - user didn't update" });
+  }
+});
+
 export { router };

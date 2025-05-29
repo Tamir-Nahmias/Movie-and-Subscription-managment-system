@@ -29,9 +29,8 @@ const createExternalMember = async (memberData) => {
 };
 
 // Update an external member by ID
-const updateExternalMember = async (id, memberData) => {
-  const { data } = await updateMember(id, memberData);
-  return data;
+const updateExternalMember = (id, memberData) => {
+  return updateMember(id, memberData);
 };
 
 // Delete an external member by ID

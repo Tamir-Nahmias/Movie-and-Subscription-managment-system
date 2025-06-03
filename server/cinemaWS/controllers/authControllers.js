@@ -24,10 +24,12 @@ router.post("/login", async (req, res) => {
     const { _id: userId } = userDetails[0];
 
     //to retrieve session time out :
-    const { sessiontimeout } = await getUserFullDetailsByID(userId);
+    const { sessiontimeout, permissions } = await getUserFullDetailsByID(
+      userId
+    );
     console.log(sessiontimeout);
 
-    const token = jwt.sign({ userID: userId }, JWT_SECRET, {
+    const token = jwt.sign({ userID: userId, permissions }, JWT_SECRET, {
       expiresIn: `${sessiontimeout}m`,
     });
     const payload = jwt.verify(token, JWT_SECRET); // OR jwt.decode(token)

@@ -82,7 +82,7 @@ router.put("/:id", requireAdmin, async (req, res) => {
   }
 });
 
-router.patch("/update-pass-word/:id", async (req, res) => {
+router.patch("/update-pass-word/:id", requireAdmin, async (req, res) => {
   try {
     const { id } = req.params;
     const obj = req.body;

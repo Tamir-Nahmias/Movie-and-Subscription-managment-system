@@ -1,7 +1,7 @@
 import express from "express";
 import {
   addMemberDB,
-  deleteMembetByiDFromDB,
+  deleteMemberByiDFromDB,
   getMemberByIDdb,
   getMembers,
   getSubsByMovies,
@@ -51,7 +51,7 @@ router.get("/:id", async (req, res) => {
 router.delete("/:id", async (req, res) => {
   try {
     const { id } = req.params;
-    const result = await deleteMembetByiDFromDB(id);
+    const result = await deleteMemberByiDFromDB(id);
     res.json({ message: "Member removed", user: result });
   } catch (error) {
     res.json({ errorMessage: error }).status(404);

@@ -1,6 +1,7 @@
 import express from "express";
 import {
   AddMovieDB,
+  deleteMovieFromAllSources,
   getMovieByIDdb,
   getMovies,
   getMoviesJoinSubscription,
@@ -79,6 +80,16 @@ router.put("/:id", async (req, res) => {
     res.json(result);
   } catch (err) {
     res.status(404).json(err);
+  }
+});
+
+router.delete("/:id", async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    const result = await deleteMovieFromAllSources(id);
+    res.json(result);
+  } catch (error) {
+    res.status(404).json({ error: error });
   }
 });
 

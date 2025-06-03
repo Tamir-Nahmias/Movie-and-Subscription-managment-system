@@ -25,6 +25,10 @@ const addNewSubscriber = (subscriber) => {
   return createSubscription(subscriber);
 };
 
+const deleteSubscriptionsByMemberID = (filter) => {
+  return;
+};
+
 export {
   getAllSubscriptions,
   getWatchedMoviesByMemberID,

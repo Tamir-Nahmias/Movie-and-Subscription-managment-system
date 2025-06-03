@@ -14,6 +14,10 @@ const router = express.Router();
 
 router.get("/", requireAuthUsers, async (req, res) => {
   try {
+    const { permissions } = req.user; // req.user came from previous handler "requireAuthUsers"
+    if (!permissions.includes("View Movies")) {
+      res.status(403).json({ message: "user is not permitted" });
+    }
     const filters = req.query ?? {};
     const result = await getAllMovies(filters);
     res.json(result);
@@ -22,8 +26,13 @@ router.get("/", requireAuthUsers, async (req, res) => {
   }
 });
 //End point  for external source movies joined subscriptions
+// request being sent from allMembers route . showing subscribers and their movies list
 router.get("/join-subscriptions", requireAuthUsers, async (req, res) => {
   try {
+    const { permissions } = req.user; // req.user came from previous handler "requireAuthUsers"
+    if (!permissions.includes("View Subscriptions")) {
+      res.status(403).json({ message: "user is not permitted" });
+    }
     const { data } = await getMoviesJoinedSubscriptions();
     res.status(200).json(data);
   } catch (e) {
@@ -49,7 +58,7 @@ router.post("/", requireAuthUsers, async (req, res) => {
     const data = await addMovie(movie);
     res.json({ message: `user ${data}` });
   } catch (err) {
-    res.json({ message: ` error occured : ${err}` }).status(400);
+    res.json.status(404)({ message: ` error occured : ${err}` });
   }
 });
 //http://localhost:3000/movies/id

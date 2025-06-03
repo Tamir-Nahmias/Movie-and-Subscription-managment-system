@@ -9,7 +9,10 @@ import {
 } from "../repositories/membersDB-Repo.js";
 import getAllMembersWS from "../repositories/membersWS-Repo.js";
 import { getAllMovies } from "../repositories/moviesDB-Repo.js";
-import { getAllSubscriptions } from "../repositories/subscriptionsDB-Repo.js";
+import {
+  deleteAllSubscriptions,
+  getAllSubscriptions,
+} from "../repositories/subscriptionsDB-Repo.js";
 
 //name , email, city
 const onInitPopulateMemberDB = async () => {
@@ -40,8 +43,15 @@ const updateMemberByIdDB = (id, obj) => {
   return updateMember(id, obj);
 };
 
-const deleteMembetByiDFromDB = (id) => {
-  return deleteMember(id);
+const deleteMemberByiDFromDB = async (memberID) => {
+  // delete memeber from memeber collection and from subscriptions
+
+  const deleteSubs = await deleteAllSubscriptions({ memberID });
+  if (deleteSubs) {
+    const deletedMember = await deleteMember(memberID);
+    return { ...deletedMember, ...deleteSubs };
+  }
+  return { message: "memeber hasn't  removed from collection" };
 };
 
 const getSubsByMovies = async (filters) => {
@@ -144,6 +154,6 @@ export {
   addMemberDB,
   getMemberByIDdb,
   updateMemberByIdDB,
-  deleteMembetByiDFromDB,
+  deleteMemberByiDFromDB,
   getSubsByMovies,
 };

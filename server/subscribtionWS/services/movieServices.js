@@ -2,12 +2,16 @@ import getAllMoviesWS from "../repositories/moviesWS-Repo.js";
 import {
   addManyMovies,
   createMovie,
+  deleteMovie,
   getAllMovies,
   getMovieById,
   updateMovie,
 } from "../repositories/moviesDB-Repo.js";
 
-import { getSubscriptionByMemberFKid } from "../repositories/subscriptionsDB-Repo.js";
+import {
+  getSubscriptionByMemberFKid,
+  updateSubsMovieField,
+} from "../repositories/subscriptionsDB-Repo.js";
 import { getAllSubscriptions } from "./subscriptionsServices.js";
 
 const setMoviesOnInit = async () => {
@@ -47,6 +51,47 @@ const getMovieByIDdb = async (id) => {
 
 const updateMovieByIdDB = async (id, obj) => {
   return await updateMovie(id, obj);
+};
+
+// const deleteMovieFromAllSources = async (id) => {
+//   const deletedMovie = await deleteMovie(id); // Step 1: delete from movies collection
+//   const subscriptions = await getAllSubscriptions(); // Step 2: get all subscriptions
+
+//   // Fix movieID comparison (ObjectId safe)
+
+//   // Step 3: remove movie from each subscription
+//   const updatePromises = subscriptions.map((sub) => {
+//     const updatedMovies = sub.movies?.filter(
+//       (movie) => !movie.movieID.equals(id)
+//     );
+
+//     return updateSubsMovieField(sub._id, { movies: updatedMovies });
+//   });
+
+//   const updateResults = await Promise.all(updatePromises);
+
+//   return {
+//     deletedMovie,
+//     updatedSubscriptions: updateResults,
+//   };
+// };
+
+const deleteMovieFromAllSources = async (id) => {
+  const deletedMovie = await deleteMovie(id); // Step 1: delete from movie collection
+  const subscriptions = await getAllSubscriptions(); // Step 2: get all subscriptions
+
+  await Promise.all(
+    subscriptions.map((sub) =>
+      updateSubsMovieField(sub._id, {
+        movies: sub.movies?.filter(
+          (movie) => movie.movieID.toString() != id.toString()
+        ),
+      })
+    )
+  );
+
+  // Optionally return something
+  return deletedMovie;
 };
 
 const getMoviesJoinSubscription = async () => {
@@ -110,4 +155,5 @@ export {
   updateMovieByIdDB,
   getUnWatchedMoviesByMemberID,
   getMoviesJoinSubscription,
+  deleteMovieFromAllSources,
 };

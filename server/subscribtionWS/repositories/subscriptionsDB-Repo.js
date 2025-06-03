@@ -18,6 +18,12 @@ const createSubscription = (subscriptionData) => {
 const updateSubscription = (id, subscriptionData) => {
   return Subscription.findByIdAndUpdate(id, subscriptionData);
 };
+
+const updateSubsMovieField = (id, updatedMoviesArr) => {
+  console.log(id, updatedMoviesArr);
+  return Subscription.updateOne({ _id: id }, updatedMoviesArr);
+};
+
 const updateSubscriptionMoviesList = (id, addedMovie) => {
   return Subscription.updateOne(
     { memberID: new mongoose.Types.ObjectId(id) },
@@ -32,8 +38,8 @@ const deleteSubscription = (id) => {
   return Subscription.findByIdAndDelete(id);
 };
 
-const deleteAllSubscriptions = () => {
-  return Subscription.deleteMany({});
+const deleteAllSubscriptions = (filters = {}) => {
+  return Subscription.deleteMany(filters);
 };
 
 export {
@@ -45,4 +51,5 @@ export {
   deleteAllSubscriptions,
   getSubscriptionByMemberFKid,
   updateSubscriptionMoviesList,
+  updateSubsMovieField,
 };

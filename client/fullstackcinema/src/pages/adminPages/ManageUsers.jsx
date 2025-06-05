@@ -16,9 +16,10 @@ const ManageUsers = () => {
 
   return (
     <>
-      <h2>Manage Users</h2>
-      <Link to="add-user">Add User</Link>
-      <Link to="all-users">All Users</Link>
+      <nav className="secondary">
+        <Link to="add-user">Add User</Link>
+        <Link to="all-users">All Users</Link>
+      </nav>
       <Outlet />
     </>
   );

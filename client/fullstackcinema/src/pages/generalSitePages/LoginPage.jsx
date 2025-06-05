@@ -24,7 +24,7 @@ const LoginPage = () => {
   };
   return (
     <>
-      <h2>Welcome to Cinema Managment system</h2>;
+      <h2 id="welcome">Welcome to Cinema Managment system</h2>
       <form onSubmit={onSubmit}>
         <div className="form-group">
           <label htmlFor="username">Username</label>
@@ -46,8 +46,10 @@ const LoginPage = () => {
             required
           />
         </div>
-        <button type="submit">Login</button>
-        <div>
+        <button type="submit" className="btn-login">
+          Login
+        </button>
+        <div className="div-cluster">
           <h4>don't have user yet ? </h4>
           <Link to="/user-registration">Click here</Link>
         </div>

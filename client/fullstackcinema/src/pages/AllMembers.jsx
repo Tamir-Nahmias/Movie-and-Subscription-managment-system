@@ -66,10 +66,9 @@ const AllMembers = () => {
 
   return (
     <>
-      <div>AllMembers</div>
       <ul>
         {members.map((member) => (
-          <li key={member._id}>
+          <li key={member._id} className="card">
             <div>Name: {member.name}</div>
             <div>Email: {member.email}</div>
             <div>City: {member.city}</div>
@@ -107,8 +106,18 @@ const AllMembers = () => {
               )}
             </div>
             <div>
-              <button onClick={() => handleEdit(member._id)}>Edit</button>
-              <button onClick={() => handlDelete(member._id)}>Delete</button>
+              <button
+                onClick={() => handleEdit(member._id)}
+                className="btn-edit"
+              >
+                Edit
+              </button>
+              <button
+                onClick={() => handlDelete(member._id)}
+                className="btn-delete"
+              >
+                Delete
+              </button>
             </div>
           </li>
         ))}

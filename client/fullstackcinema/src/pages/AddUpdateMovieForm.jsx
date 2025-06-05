@@ -99,11 +99,11 @@ const AddUpdateMovieForm = ({ id, isEdit }) => {
             ></input>
           </div>
 
-          <div className="button-group">
-            <button type="submit" className="save-btn">
+          <div className="btn-cluster">
+            <button type="submit" className="btn-save">
               Save
             </button>
-            <button type="button" className="cancel-btn" onClick={handleCancel}>
+            <button type="button" className="btn-cancel" onClick={handleCancel}>
               Cancel
             </button>
           </div>

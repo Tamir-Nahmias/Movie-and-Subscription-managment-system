@@ -89,11 +89,12 @@ const AddUpdateMemberForm = ({ isEdit, id }) => {
           />
         </label>
       </div>
-
-      <button type="submit">{isEdit ? "Update" : "Add"}</button>
-      <button type="button" onClick={handleCancel}>
-        cancel
-      </button>
+      <div className="btn-cluster">
+        <button type="submit">{isEdit ? "Update" : "Add"}</button>
+        <button type="button" onClick={handleCancel} className="btn-cancel">
+          cancel
+        </button>
+      </div>
     </form>
   );
 };

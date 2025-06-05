@@ -212,7 +212,6 @@ const GenericForm = (props) => {
               />
               View Subscriptions
             </label>
-            <br />
 
             <label>
               <input
@@ -230,7 +229,6 @@ const GenericForm = (props) => {
               />
               Create Subscriptions
             </label>
-            <br />
 
             <label>
               <input
@@ -248,7 +246,6 @@ const GenericForm = (props) => {
               />
               Delete Subscriptions
             </label>
-            <br />
 
             <label>
               <input
@@ -266,7 +263,6 @@ const GenericForm = (props) => {
               />
               Update Subscriptions
             </label>
-            <br />
 
             <label>
               <input
@@ -284,7 +280,6 @@ const GenericForm = (props) => {
               />
               View Movies
             </label>
-            <br />
 
             <label>
               <input
@@ -301,7 +296,6 @@ const GenericForm = (props) => {
               />
               Create Movies
             </label>
-            <br />
 
             <label>
               <input
@@ -318,7 +312,6 @@ const GenericForm = (props) => {
               />
               Delete Movies
             </label>
-            <br />
 
             <label>
               <input
@@ -338,9 +331,13 @@ const GenericForm = (props) => {
           </fieldset>
         )}
 
-        <div>
-          <button type="submit">{action}</button>
-          <button onClick={handleCancel}>Cancel</button>
+        <div className="btn-cluster">
+          <button type="submit" className="btn-edit">
+            {action}
+          </button>
+          <button onClick={handleCancel} className="btn-cancel">
+            Cancel
+          </button>
         </div>
       </form>
     </>

@@ -47,15 +47,14 @@ const MainPage = () => {
 
   return (
     <>
-      <h2>Main Page</h2>
-      <h4>Hello, {name}</h4>
+      <h3>Hello, {name}</h3>
       <nav>
         <Link to="movies">Movies</Link>
         <Link to="subscriptions">Subscriptions</Link>
         {isAdmin && <Link to="manage-users">Manage Users</Link>}
-        <Link to="log-out-page">Log out</Link>
-        <Outlet />
+        <Link onClick={() => (window.location.href = "/")}>Log out</Link>
       </nav>
+      <Outlet />
     </>
   );
 };

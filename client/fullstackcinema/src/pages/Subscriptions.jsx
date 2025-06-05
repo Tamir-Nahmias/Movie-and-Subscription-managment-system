@@ -8,10 +8,10 @@ const Subscriptions = () => {
   }, []);
   return (
     <div>
-      <h2>Subscriptions</h2>
-
-      <Link to="add-members">Add Member</Link>
-      <Link to="all-members">All Members</Link>
+      <nav className="secondary">
+        <Link to="add-members">Add Member</Link>
+        <Link to="all-members">All Members</Link>
+      </nav>
       <Outlet />
     </div>
   );

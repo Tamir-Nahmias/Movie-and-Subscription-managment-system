@@ -3,7 +3,7 @@ import AddUpdateMemberForm from "./AddUpdateMemberForm";
 const AddMember = () => {
   return (
     <>
-      <div>AddMember</div>
+      <div>Add Member</div>
       <AddUpdateMemberForm isEdit={false} />
     </>
   );

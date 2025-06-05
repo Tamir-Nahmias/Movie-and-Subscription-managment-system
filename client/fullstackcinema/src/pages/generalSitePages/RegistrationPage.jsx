@@ -53,7 +53,9 @@ const RegistrationPage = () => {
             required
           />
         </div>
-        <button type="submit">Register</button>
+        <button type="submit" className="btn-register">
+          Register
+        </button>
       </form>
       {!isUsernameExist && <h3>user doesnt exist</h3>}
     </>

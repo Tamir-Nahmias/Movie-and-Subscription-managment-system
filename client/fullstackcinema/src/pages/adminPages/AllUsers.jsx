@@ -30,11 +30,10 @@ const AllUsers = () => {
   }, [deleteIndicator]);
   return (
     <>
-      <h2>All users page</h2>
       <ul>
         {users.map((user) => {
           return (
-            <li key={user.id}>
+            <li key={user.id} className="card">
               <div>Name : {user.firstname}</div>
               <div>User Name: {user.username}</div>
               <div>Session Time Out: {user.sessiontimeout}</div>

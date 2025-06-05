@@ -28,6 +28,10 @@ const getMoviesJoinSubs = () => {
   return axios.get(`${MOVIES_URL}/join-subscriptions`);
 };
 
+const deleteMovieByiD = (id) => {
+  return axios.delete(`${MOVIES_URL}/${id}`);
+};
+
 export {
   getAllMovies,
   addMovie,
@@ -35,4 +39,5 @@ export {
   updateMovieById,
   getUnWatchedMoviesByMemberID,
   getMoviesJoinSubs,
+  deleteMovieByiD,
 };

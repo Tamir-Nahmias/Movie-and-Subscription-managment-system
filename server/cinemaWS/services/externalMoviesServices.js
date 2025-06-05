@@ -1,5 +1,6 @@
 import {
   addMovie as addMovieRepo,
+  deleteMovieByiD,
   getMovieByID,
   getAllMovies as getMovies,
   getMoviesJoinSubs,
@@ -36,6 +37,10 @@ const getMoviesJoinedSubscriptions = () => {
   return getMoviesJoinSubs();
 };
 
+const deleteMovie = (id) => {
+  return deleteMovieByiD(id);
+};
+
 export {
   getAllMovies,
   addMovie,
@@ -43,4 +48,5 @@ export {
   updateMovie,
   getUnwatchedMovies,
   getMoviesJoinedSubscriptions,
+  deleteMovie,
 };

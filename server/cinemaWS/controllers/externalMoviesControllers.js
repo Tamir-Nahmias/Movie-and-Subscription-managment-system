@@ -1,5 +1,6 @@
 import {
   addMovie,
+  deleteMovie,
   getAllMovies,
   getMovieByIDService,
   getMoviesJoinedSubscriptions,
@@ -81,6 +82,17 @@ router.put("/:id", requireAuthUsers, async (req, res) => {
     res.json(result);
   } catch (err) {
     res.json(err);
+  }
+});
+
+router.delete("/:id", requireAuthUsers, async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { data: result } = await deleteMovie(id);
+    res.status(201).json({ "removed movie": result });
+  } catch (err) {
+    res.status(400).json({ "Error msg": err.message });
+    throw Error(err);
   }
 });
 
